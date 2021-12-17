@@ -1,0 +1,44 @@
+users={}
+class Account:
+    
+    def __init__ (self,aid,total_m,name):
+        self.aid=aid
+        self.total_m=total_m
+        self.name=name
+        users[self.name]=[self.aid,self.total_m]        
+    
+
+    def __iadd__(self,m):
+        self.total_m+=m
+        users[self.name]=[self.aid,self.total_m]
+        
+        
+    def __isub__(self,m):
+        self.total_m-=m
+        users[self.name]=[self.aid,self.total_m]
+        
+    def send(self,m,send_to_name,send_to_aid):
+        self.total_m-=m
+        users[self.name]=[self.aid,self.total_m]
+        print("%s님에게 %d원을 송금하셨습니다."%(send_to_name,m))
+        users[send_to_name][1]+=m
+    
+    def show_info(self):
+        print("%s(%s)님의 계좌의 잔액은 %d입니다"%(self.name,self.aid,self.total_m))
+    
+        
+    def __str__(self):
+        return '{0}, {1}'.format(self.aid, self.ab1)
+    
+    def show_all_user(self):
+        for i in users:
+            print(i,"의 잔액은" ,users[i][1])
+        
+
+
+acnt1=Account('james01',100,"jame1")
+acnt2=Account('james02',200,"jame2")
+acnt3=Account('james03',300,"jame3")
+acnt1.send(10,"jame2","james02")
+
+acnt1.show_all_user()
